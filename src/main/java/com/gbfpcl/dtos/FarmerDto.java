@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.gbfpcl.entities.SugarcaneEntry;
+import com.gbfpcl.entities.ImportDetails;
 
 import lombok.Data;
 
@@ -33,6 +33,6 @@ public class FarmerDto {
 	private Long adharNumber;
 
 	@JsonBackReference
-	private List<SugarcaneEntry> sugarcaneEntries;
+	private List<ImportDetails> sugarcaneEntries;
 
 }

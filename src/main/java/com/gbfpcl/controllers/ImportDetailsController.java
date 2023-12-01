@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gbfpcl.dtos.SugarcaneEntryDto;
-import com.gbfpcl.service.SugarcaneEntryService;
+import com.gbfpcl.dtos.ImportDetailsDto;
+import com.gbfpcl.service.ImportDetailsService;
 
 @RestController
 @RequestMapping("/Ghorpade-Brother/Entry/")
-public class SugarcaneEntryController {
+public class ImportDetailsController {
 	
 	@Autowired
-	private SugarcaneEntryService sugarcaneEntryService;
+	private ImportDetailsService sugarcaneEntryService;
 	
 	@PostMapping(value="/addEntry/{farmerId}")
-	public ResponseEntity<SugarcaneEntryDto> addEntry(@Valid @RequestBody SugarcaneEntryDto sugarcaneEntryDto,@PathVariable("farmerId")Integer farmerId) {
-		SugarcaneEntryDto addEntry = this.sugarcaneEntryService.addEntry(sugarcaneEntryDto,farmerId);
-		return new ResponseEntity<SugarcaneEntryDto>(addEntry,HttpStatus.CREATED);
+	public ResponseEntity<ImportDetailsDto> addEntry(@Valid @RequestBody ImportDetailsDto sugarcaneEntryDto,@PathVariable("farmerId")Integer farmerId) {
+		ImportDetailsDto addEntry = this.sugarcaneEntryService.addEntry(sugarcaneEntryDto,farmerId);
+		return new ResponseEntity<ImportDetailsDto>(addEntry,HttpStatus.CREATED);
 	}
 	
 	@PutMapping(value="/editEntry/{entryId}/{farmerId}")
-	public ResponseEntity<SugarcaneEntryDto> updateEntry(@Valid @RequestBody SugarcaneEntryDto sugarcaneEntryDto,@PathVariable("entryId")Integer entryId,@PathVariable("farmerId")Integer farmerId) {
-		SugarcaneEntryDto update = this.sugarcaneEntryService.updateEntry(entryId,sugarcaneEntryDto,farmerId);
-		return new ResponseEntity<SugarcaneEntryDto>(update,HttpStatus.OK);
+	public ResponseEntity<ImportDetailsDto> updateEntry(@Valid @RequestBody ImportDetailsDto sugarcaneEntryDto,@PathVariable("entryId")Integer entryId,@PathVariable("farmerId")Integer farmerId) {
+		ImportDetailsDto update = this.sugarcaneEntryService.updateEntry(entryId,sugarcaneEntryDto,farmerId);
+		return new ResponseEntity<ImportDetailsDto>(update,HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/getAllEntries")
-	public ResponseEntity<List<SugarcaneEntryDto>> getAllEntries(){
-		 List<SugarcaneEntryDto> allEntries = this.sugarcaneEntryService.getAllEntries();
+	public ResponseEntity<List<ImportDetailsDto>> getAllEntries(){
+		 List<ImportDetailsDto> allEntries = this.sugarcaneEntryService.getAllEntries();
 		return new ResponseEntity<>(allEntries,HttpStatus.OK);
 	}
 	
@@ -51,8 +51,8 @@ public class SugarcaneEntryController {
 	}
 	
 	@GetMapping(value="/getEntryById/{entryId}")
-	public ResponseEntity<SugarcaneEntryDto> getEntryById(@PathVariable("entryId")Integer entryId){
-		SugarcaneEntryDto entryById = this.sugarcaneEntryService.getEntryById(entryId);
+	public ResponseEntity<ImportDetailsDto> getEntryById(@PathVariable("entryId")Integer entryId){
+		ImportDetailsDto entryById = this.sugarcaneEntryService.getEntryById(entryId);
 		return new ResponseEntity<>(entryById,HttpStatus.OK);
 	}
 	

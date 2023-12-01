@@ -15,8 +15,8 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="sugarcane_entry")
-public class SugarcaneEntry {
+@Table(name="import_details")
+public class ImportDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

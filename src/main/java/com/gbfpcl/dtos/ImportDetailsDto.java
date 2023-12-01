@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 @Data
-public class SugarcaneEntryDto {
+public class ImportDetailsDto {
 	
 	private Integer entryId;
 	//private Farmer farmer;
@@ -15,7 +15,7 @@ public class SugarcaneEntryDto {
 
 	@NotNull
 	private Timestamp entryDateTime;
-	public SugarcaneEntryDto() {
+	public ImportDetailsDto() {
         this.entryDateTime = Timestamp.valueOf(LocalDateTime.now());
     }
 	@NotNull

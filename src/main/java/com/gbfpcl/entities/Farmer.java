@@ -40,6 +40,6 @@ public class Farmer {
 	private Long adharNumber;
 	
 	 @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL)
-	    private List<SugarcaneEntry> sugarcaneEntries;
+	    private List<ImportDetails> sugarcaneEntries;
 
 }
