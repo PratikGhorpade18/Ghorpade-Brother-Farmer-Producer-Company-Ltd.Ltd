@@ -11,7 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.Data;
+
 @Entity
+@Data
 @Table(name="export_details")
 public class ExportDetails {
 	@Id
@@ -31,7 +37,7 @@ public class ExportDetails {
 	@Column(name="comment")
 	private String comment;
 	
-	@Column(name="payment_status")
+	@Column(name="export_payment_status")
 	private String paymentStatus;
 	
 	@Column(name="export_date")

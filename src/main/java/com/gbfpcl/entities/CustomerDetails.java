@@ -24,19 +24,19 @@ public class CustomerDetails {
 	private Integer customerId;
 	
 	@Column(name="customer_name")
-	private String CustomerName;
+	private String customerName;
 	
 	@Column(name="office_contact_number")
-	private Long OfficeContactNumber;
+	private Long officeContactNumber;
 	
 	@Column(name="contact_person_name")
-	private String  ContactPersonName;
+	private String  contactPersonName;
 	
 	@Column(name="contact_person_mobilenumber")
-	private Long ContactPersonMobileNubmber;
+	private Long contactPersonMobileNubmber;
 	
 	@Column(name="email_id")
-	private String EmailId;
+	private String emailId;
 	
 	
 	@Column(name="address")

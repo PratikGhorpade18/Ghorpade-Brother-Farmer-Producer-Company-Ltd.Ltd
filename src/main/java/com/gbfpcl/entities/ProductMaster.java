@@ -44,7 +44,6 @@ public class ProductMaster {
 	
 
 	@OneToMany(mappedBy = "productMaster",cascade = CascadeType.ALL)
-	@JsonBackReference
 	private List<DailyProductionDetails> dailyProductionDetails;
 	
 	

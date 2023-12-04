@@ -45,7 +45,6 @@ public class DailyProductionDetails {
 
 	@ManyToOne
 	@JoinColumn(name="product_id",updatable = true)
-	@JsonManagedReference
 	private ProductMaster productMaster;
 	
 	
