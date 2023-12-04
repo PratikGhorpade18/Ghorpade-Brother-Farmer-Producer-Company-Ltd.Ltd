@@ -9,9 +9,9 @@ import com.gbfpcl.entities.Farmer;
 
 public interface DailyReportService {
 
-	DailyProductionDetails addDailyReportl(@Valid DailyProductionDetails dailyProductionDetails);
+	DailyProductionDetails addDailyReportl(@Valid DailyProductionDetails dailyProductionDetails, Integer productId);
 
-	Object getAllDailyReport();
+
 
 	DailyProductionDetails updateDailyReport(Integer dailyReportId,
 			DailyProductionDetails dailyProductionDetails);

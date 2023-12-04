@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
@@ -43,6 +44,7 @@ public class ProductMaster {
 	
 
 	@OneToMany(mappedBy = "productMaster",cascade = CascadeType.ALL)
+	@JsonBackReference
 	private List<DailyProductionDetails> dailyProductionDetails;
 	
 	

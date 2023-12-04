@@ -21,7 +21,6 @@ public class ProductController {
 
 	@PostMapping(value="/addProduct")
 	public ResponseEntity<ProductMaster> addProduct(@RequestBody ProductMaster productMaster){
-		System.out.println("-----------");
 		ProductMaster addProduct = productService.addProduct(productMaster);
 		return new ResponseEntity<>(addProduct,HttpStatus.CREATED);
 	}

@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Entity
@@ -35,10 +39,18 @@ public class DailyProductionDetails {
 	
 	@Column(name="total_production")
 	private float totalProduction;
+	
+	@Column(name="approx_material_weight")
+	private float approxMaterialWeight;
 
 	@ManyToOne
-	@JoinColumn(name="product_id")
+	@JoinColumn(name="product_id",updatable = true)
+	@JsonManagedReference
 	private ProductMaster productMaster;
 	
+	
+	 public void setProductMaster(ProductMaster productMaster) {
+	        this.productMaster = productMaster;
+	    }
 
 }

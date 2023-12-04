@@ -2,9 +2,11 @@ package com.gbfpcl.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,9 +31,9 @@ public class DailyProductionController {
 	private DailyReportService dailyReportService;
 	
 	
-	@PostMapping(value="/addDailyReport")
-	public ResponseEntity<DailyProductionDetails> addDailyReport( @Valid @RequestBody DailyProductionDetails dailyProductionDetails){
-		DailyProductionDetails created=this.dailyReportService.addDailyReportl(dailyProductionDetails);
+	@PostMapping(value="/addDailyReport/{productId}")
+	public ResponseEntity<DailyProductionDetails> addDailyReport( @Valid @RequestBody DailyProductionDetails dailyProductionDetails,@PathVariable("productId")Integer productId){
+		DailyProductionDetails created=this.dailyReportService.addDailyReportl(dailyProductionDetails,productId);
 		return new ResponseEntity<DailyProductionDetails>(created,HttpStatus.CREATED);
 	}
 	
@@ -41,7 +43,7 @@ public class DailyProductionController {
 	}
 	
 	@PutMapping(value="/updateDailyReport/{dailyReportId}")
-	public ResponseEntity<DailyProductionDetails> updateDailyReport(@Valid @RequestBody DailyProductionDetails dailyProductionDetails,  @PathVariable(name="dailyReportId")Integer dailyReportId){
+	public ResponseEntity<DailyProductionDetails> updateDailyReport(@Valid @RequestBody DailyProductionDetails dailyProductionDetails,  @PathVariable(name="dailyReportId")Integer dailyReportId,HttpServletRequest request){
 		DailyProductionDetails updateDailyReport = this.dailyReportService.updateDailyReport(dailyReportId,dailyProductionDetails);
 		return new ResponseEntity<DailyProductionDetails>(updateDailyReport,HttpStatus.OK);
 	}
@@ -49,7 +51,7 @@ public class DailyProductionController {
 	@DeleteMapping(value="/deleteDailyReport/{dailyReportId}")
 	public ResponseEntity<?> deleteFarmerById(@PathVariable(name="dailyReportId")Integer dailyReportId){
 		this.dailyReportService.deleteDailyReport(dailyReportId);
-		return  ResponseEntity.ok("Farmer Deleted Sucessfully!!!");
+		return  ResponseEntity.ok("Report Deleted Sucessfully!!!");
 	}
 	
 	@GetMapping(value="/getDailyReportId/{dailyReportId}")
