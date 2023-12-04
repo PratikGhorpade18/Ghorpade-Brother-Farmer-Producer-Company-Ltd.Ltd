@@ -1,8 +1,14 @@
 package com.gbfpcl.controllers;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -10,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gbfpcl.dtos.FarmerDto;
+import com.gbfpcl.entities.Farmer;
 import com.gbfpcl.entities.ProductMaster;
 import com.gbfpcl.service.ProductService;
 
@@ -29,6 +37,25 @@ public class ProductController {
 	public ResponseEntity<ProductMaster> updateMaster(@RequestBody ProductMaster productMaster,@PathVariable("productId")Integer productId){
 		ProductMaster updateProduct = productService.updateProduct(productMaster,productId);
 		return new ResponseEntity<>(updateProduct,HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/getAllProducts")
+	public ResponseEntity<List<ProductMaster>> getAllProducts(){
+		return new ResponseEntity<>(this.productService.getAllProducts(),HttpStatus.OK);
+	}
+	
+	
+	
+	@DeleteMapping(value="/deleteProduct/{productId}")
+	public ResponseEntity<?> deleteProductById(@PathVariable(name="productId")Integer productId){
+		this.productService.deleteProduct(productId);
+		return  ResponseEntity.ok("Product Deleted Sucessfully!!!");
+	}
+	
+	@GetMapping(value="/getProductById/{productId}")
+	public ResponseEntity<ProductMaster> getFarmerbyId(@PathVariable(name="productId")Integer productId){
+		ProductMaster productMaster = this.productService.getProductById(productId);
+		return new ResponseEntity<ProductMaster>(productMaster,HttpStatus.OK);
 	}
 	
 }

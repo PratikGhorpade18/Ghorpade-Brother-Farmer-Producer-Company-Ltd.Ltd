@@ -35,8 +35,19 @@ private ExportDetailsRepo exportDetailsRepo;
 
 	@Override
 	public ExportDetails editExportEntry(Integer entryId, ExportDetails exportdetails) {
-		// TODO Auto-generated method stub
-		return null;
+		ExportDetails exportEntryById = getExportEntryById(entryId);
+		
+		exportEntryById.setAmount(exportdetails.getAmount());
+		exportEntryById.setComment(exportdetails.getComment());
+		//exportEntryById.setCustomerDetails(exportdetails.getCustomerDetails());
+		exportEntryById.setExportDate(exportdetails.getExportDate());
+		exportEntryById.setPaymentDate(exportdetails.getPaymentDate());
+		exportEntryById.setPaymentStatus(exportdetails.getPaymentStatus());
+		exportEntryById.setProductMaster(exportdetails.getProductMaster());
+		exportEntryById.setQuantity(exportdetails.getQuantity());
+		//exportEntryById.setRatePerkg(exportdetails.getRatePerkg());
+		
+		return this.exportDetailsRepo.save(exportEntryById);
 	}
 
 }

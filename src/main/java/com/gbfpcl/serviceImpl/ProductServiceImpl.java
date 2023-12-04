@@ -1,5 +1,7 @@
 package com.gbfpcl.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,22 @@ ProductRepo productRepo;
 		orElseThrow.setProductName(productMaster.getProductName());
 		orElseThrow.setCreatedDate(productMaster.getCreatedDate());
 		return this.productRepo.save(orElseThrow);
+	}
+
+	@Override
+	public void deleteProduct(Integer productId) {
+		this.productRepo.deleteById(productId);
+		
+	}
+
+	@Override
+	public List<ProductMaster> getAllProducts() {
+		return this.productRepo.findAll();
+	}
+
+	@Override
+	public ProductMaster getProductById(Integer productId) {
+		return this.productRepo.findById(productId).orElseThrow(()->new ResourceNotFoundException("product", "productId", productId));
 	}
 
 }
