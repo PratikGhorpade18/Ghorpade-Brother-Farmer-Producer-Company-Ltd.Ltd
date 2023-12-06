@@ -3,8 +3,10 @@ package com.gbfpcl.entities;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,14 +19,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Table(name="daily_production_details")
 public class DailyProductionDetails {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="daily_report_id")
 	private Integer dailyReportId;
 	
@@ -43,13 +50,10 @@ public class DailyProductionDetails {
 	@Column(name="approx_material_weight")
 	private float approxMaterialWeight;
 
-	@ManyToOne
-	@JoinColumn(name="product_id",updatable = true)
+	@ManyToOne(cascade = CascadeType.MERGE,fetch  = FetchType.LAZY)
+	@JoinColumn(name="product_id")
+	@JsonBackReference
 	private ProductMaster productMaster;
-	
-	
-	 public void setProductMaster(ProductMaster productMaster) {
-	        this.productMaster = productMaster;
-	    }
+
 
 }

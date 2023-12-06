@@ -13,18 +13,19 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Setter
+@Getter
 @Table(name="product_master")
 public class ProductMaster {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="product_id")
 	private Integer productId;
 	
@@ -38,11 +39,11 @@ public class ProductMaster {
         this.createdDate = Timestamp.valueOf(LocalDateTime.now());
     }
 	
-
+@JsonIgnore
 	@OneToMany(mappedBy = "productMaster",cascade = CascadeType.ALL)
 	private List<ExportDetails> exportEntries;
 	
-
+    @JsonIgnore
 	@OneToMany(mappedBy = "productMaster",cascade = CascadeType.ALL)
 	private List<DailyProductionDetails> dailyProductionDetails;
 	

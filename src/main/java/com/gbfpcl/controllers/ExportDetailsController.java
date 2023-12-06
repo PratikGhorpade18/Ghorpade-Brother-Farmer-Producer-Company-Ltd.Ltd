@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gbfpcl.dtos.ExportDetailDto;
 import com.gbfpcl.entities.ExportDetails;
 import com.gbfpcl.service.ExportDetailsService;
 
@@ -27,8 +28,8 @@ public class ExportDetailsController {
 	private ExportDetailsService exportDetailsService;
 	
 	@PostMapping(value="addExportEntry",consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ExportDetails> addExportEntry(@Valid @RequestBody ExportDetails exportDetails) {
-		ExportDetails addEntry = this.exportDetailsService.addExportEntry(exportDetails);
+	public ResponseEntity<ExportDetailDto> addExportEntry(@Valid @RequestBody ExportDetailDto exportDetails) {
+		ExportDetailDto addEntry = this.exportDetailsService.addExportEntry(exportDetails);
 		return new ResponseEntity<>(addEntry,HttpStatus.CREATED);
 	}
 	

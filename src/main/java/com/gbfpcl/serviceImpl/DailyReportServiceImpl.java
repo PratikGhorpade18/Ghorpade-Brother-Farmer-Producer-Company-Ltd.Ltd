@@ -27,9 +27,10 @@ public class DailyReportServiceImpl  implements DailyReportService{
 	
 	
 	@Override
-	public DailyProductionDetails addDailyReportl( DailyProductionDetails dailyProductionDetails,Integer productId) {
-		ProductMaster orElseThrow = this.productRepo.findById(productId).orElseThrow(()-> new ResourceNotFoundException("Product", "productId", productId));
+	public DailyProductionDetails addDailyReportl( DailyProductionDetails dailyProductionDetails) {
+		ProductMaster orElseThrow = this.productRepo.findById(dailyProductionDetails.getProductMaster().getProductId()).orElseThrow(()-> new ResourceNotFoundException("Product", "productId", dailyProductionDetails.getProductMaster().getProductId()));
 		dailyProductionDetails.setProductMaster(orElseThrow);
+		dailyProductionDetails.setTotalProduction(dailyProductionDetails.getProductionQuantity()+dailyProductionDetails.getWasteProduct());
 		this.dailyReportRepo.save(dailyProductionDetails);
 		return dailyProductionDetails;
 	}
@@ -45,8 +46,8 @@ public class DailyReportServiceImpl  implements DailyReportService{
 	        dailyReportId2.setWasteProduct(dailyProductionDetails.getWasteProduct());
 	        dailyReportId2.setProductionDate(dailyProductionDetails.getProductionDate());
 	        dailyReportId2.setApproxMaterialWeight(dailyProductionDetails.getApproxMaterialWeight());
-	        dailyReportId2.setTotalProduction(dailyProductionDetails.getTotalProduction());
 	        dailyReportId2.setProductMaster(this.productRepo.findById(dailyProductionDetails.getProductMaster().getProductId()).orElseThrow(()-> new ResourceNotFoundException("Product", "productId",dailyProductionDetails.getProductMaster().getProductId() )));
+	        dailyReportId2.setTotalProduction(dailyProductionDetails.getProductionQuantity()+dailyProductionDetails.getWasteProduct());
 	        
 		return this.dailyReportRepo.save(dailyReportId2);
 	}

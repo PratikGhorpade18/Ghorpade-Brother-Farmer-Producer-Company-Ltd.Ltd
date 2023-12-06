@@ -1,5 +1,6 @@
 package com.gbfpcl.controllers;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gbfpcl.dtos.ImportDetailsDto;
+import com.gbfpcl.entities.ImportDetails;
 import com.gbfpcl.service.ImportDetailsService;
 
 @RestController
@@ -26,15 +29,15 @@ public class ImportDetailsController {
 	@Autowired
 	private ImportDetailsService sugarcaneEntryService;
 	
-	@PostMapping(value="/addEntry/{farmerId}")
-	public ResponseEntity<ImportDetailsDto> addEntry(@Valid @RequestBody ImportDetailsDto sugarcaneEntryDto,@PathVariable("farmerId")Integer farmerId) {
-		ImportDetailsDto addEntry = this.sugarcaneEntryService.addEntry(sugarcaneEntryDto,farmerId);
+	@PostMapping(value="/addEntry")
+	public ResponseEntity<ImportDetailsDto> addEntry(@Valid @RequestBody ImportDetailsDto sugarcaneEntryDto) {
+		ImportDetailsDto addEntry = this.sugarcaneEntryService.addEntry(sugarcaneEntryDto);
 		return new ResponseEntity<ImportDetailsDto>(addEntry,HttpStatus.CREATED);
 	}
 	
-	@PutMapping(value="/editEntry/{entryId}/{farmerId}")
-	public ResponseEntity<ImportDetailsDto> updateEntry(@Valid @RequestBody ImportDetailsDto sugarcaneEntryDto,@PathVariable("entryId")Integer entryId,@PathVariable("farmerId")Integer farmerId) {
-		ImportDetailsDto update = this.sugarcaneEntryService.updateEntry(entryId,sugarcaneEntryDto,farmerId);
+	@PutMapping(value="/editEntry/{entryId}")
+	public ResponseEntity<ImportDetailsDto> updateEntry(@Valid @RequestBody ImportDetailsDto sugarcaneEntryDto,@PathVariable("entryId")Integer entryId) {
+		ImportDetailsDto update = this.sugarcaneEntryService.updateEntry(entryId,sugarcaneEntryDto);
 		return new ResponseEntity<ImportDetailsDto>(update,HttpStatus.OK);
 	}
 	
@@ -54,6 +57,12 @@ public class ImportDetailsController {
 	public ResponseEntity<ImportDetailsDto> getEntryById(@PathVariable("entryId")Integer entryId){
 		ImportDetailsDto entryById = this.sugarcaneEntryService.getEntryById(entryId);
 		return new ResponseEntity<>(entryById,HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/getImportEntriesByDate")
+	public ResponseEntity<List<ImportDetailsDto>> getImportEntriesByDate(@RequestParam("date") Date date){
+		List<ImportDetailsDto> importEntriesByDate = this.sugarcaneEntryService.getImportEntriesByDate(date);
+		return new ResponseEntity<>(importEntriesByDate,HttpStatus.OK);
 	}
 	
 	

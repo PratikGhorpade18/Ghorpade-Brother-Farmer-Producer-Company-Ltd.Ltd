@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gbfpcl.dtos.FarmerDto;
@@ -24,16 +25,16 @@ import com.gbfpcl.entities.Farmer;
 import com.gbfpcl.service.DailyReportService;
 
 @RestController
-@RequestMapping("/Ghorpade-Brother/DailyReport/")
+@RequestMapping("/Ghorpade-Brother/DailyReport")
 public class DailyProductionController {
 	
 	@Autowired
 	private DailyReportService dailyReportService;
 	
 	
-	@PostMapping(value="/addDailyReport/{productId}")
-	public ResponseEntity<DailyProductionDetails> addDailyReport( @Valid @RequestBody DailyProductionDetails dailyProductionDetails,@PathVariable("productId")Integer productId){
-		DailyProductionDetails created=this.dailyReportService.addDailyReportl(dailyProductionDetails,productId);
+	@PostMapping(value="/addDailyReport")
+	@ResponseBody public ResponseEntity<DailyProductionDetails> addDailyReport( @Valid @RequestBody DailyProductionDetails dailyProductionDetails){
+		DailyProductionDetails created=this.dailyReportService.addDailyReportl(dailyProductionDetails);
 		return new ResponseEntity<DailyProductionDetails>(created,HttpStatus.CREATED);
 	}
 	
@@ -43,7 +44,7 @@ public class DailyProductionController {
 	}
 	
 	@PutMapping(value="/updateDailyReport/{dailyReportId}")
-	public ResponseEntity<DailyProductionDetails> updateDailyReport(@Valid @RequestBody DailyProductionDetails dailyProductionDetails,  @PathVariable(name="dailyReportId")Integer dailyReportId,HttpServletRequest request){
+	public ResponseEntity<DailyProductionDetails> updateDailyReport(@Valid @RequestBody DailyProductionDetails dailyProductionDetails,  @PathVariable(name="dailyReportId")Integer dailyReportId){
 		DailyProductionDetails updateDailyReport = this.dailyReportService.updateDailyReport(dailyReportId,dailyProductionDetails);
 		return new ResponseEntity<DailyProductionDetails>(updateDailyReport,HttpStatus.OK);
 	}

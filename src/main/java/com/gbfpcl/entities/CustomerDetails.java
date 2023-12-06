@@ -11,15 +11,24 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Table(name="customer_details")
 public class CustomerDetails {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="customer_id")
 	private Integer customerId;
 	
@@ -42,7 +51,8 @@ public class CustomerDetails {
 	@Column(name="address")
 	private String address;
 	
-	@OneToMany(mappedBy = "customerDetails",cascade = CascadeType.ALL)
+	@JsonBackReference
+	@OneToMany(mappedBy = "customerDetails")
 	private List<ExportDetails> expoerDetails;
 	
 	   
