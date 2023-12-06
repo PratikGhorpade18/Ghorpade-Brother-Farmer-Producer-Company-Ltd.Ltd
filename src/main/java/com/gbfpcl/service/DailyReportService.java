@@ -4,12 +4,13 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.gbfpcl.dtos.DailyProductionDetailsDto;
 import com.gbfpcl.entities.DailyProductionDetails;
 import com.gbfpcl.entities.Farmer;
 
 public interface DailyReportService {
 
-	DailyProductionDetails addDailyReportl(@Valid DailyProductionDetails dailyProductionDetails);
+	DailyProductionDetailsDto addDailyReportl( DailyProductionDetailsDto dailyProductionDetails);
 
 
 

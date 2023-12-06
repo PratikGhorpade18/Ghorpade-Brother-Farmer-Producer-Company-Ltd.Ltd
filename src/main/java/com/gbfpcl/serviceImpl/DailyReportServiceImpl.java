@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gbfpcl.dtos.DailyProductionDetailsDto;
 import com.gbfpcl.entities.DailyProductionDetails;
 import com.gbfpcl.entities.ProductMaster;
 import com.gbfpcl.exceptions.ResourceNotFoundException;
@@ -24,15 +26,16 @@ public class DailyReportServiceImpl  implements DailyReportService{
 	@Autowired 
 	private ProductRepo productRepo;
 	
+	ModelMapper mapper =new ModelMapper();
 	
 	
 	@Override
-	public DailyProductionDetails addDailyReportl( DailyProductionDetails dailyProductionDetails) {
+	public DailyProductionDetailsDto addDailyReportl( DailyProductionDetailsDto dailyProductionDetails) {
 		ProductMaster orElseThrow = this.productRepo.findById(dailyProductionDetails.getProductMaster().getProductId()).orElseThrow(()-> new ResourceNotFoundException("Product", "productId", dailyProductionDetails.getProductMaster().getProductId()));
 		dailyProductionDetails.setProductMaster(orElseThrow);
 		dailyProductionDetails.setTotalProduction(dailyProductionDetails.getProductionQuantity()+dailyProductionDetails.getWasteProduct());
-		this.dailyReportRepo.save(dailyProductionDetails);
-		return dailyProductionDetails;
+		DailyProductionDetails save = this.dailyReportRepo.save(this.mapper.map(dailyProductionDetails, DailyProductionDetails.class));
+		return this.mapper.map(save, DailyProductionDetailsDto.class);
 	}
 
 	

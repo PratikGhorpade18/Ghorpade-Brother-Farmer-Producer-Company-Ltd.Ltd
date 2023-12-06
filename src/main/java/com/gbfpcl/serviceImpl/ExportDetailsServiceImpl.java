@@ -1,8 +1,10 @@
 package com.gbfpcl.serviceImpl;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import com.gbfpcl.dtos.ExportDetailDto;
@@ -63,6 +65,11 @@ ModelMapper mapper=new ModelMapper();
 		exportEntryById.setCustomerDetails(this.customerDetailsRepo.findById(exportdetails.getCustomerDetails().getCustomerId()).orElseThrow(()->new ResourceNotFoundException("Customer", "customerId", exportdetails.getCustomerDetails().getCustomerId())));
 		exportEntryById.setProductMaster(this.productRepo.findById(exportdetails.getProductMaster().getProductId()).orElseThrow(()->new ResourceNotFoundException("Product", "roductId", exportdetails.getProductMaster().getProductId())));
 		return this.exportDetailsRepo.save(exportEntryById);
+	}
+
+	@Override
+	public List<ExportDetails> getExportEntriesOndate(Date date) {
+		return this.exportDetailsRepo.findExportEntriesOnDate(date);
 	}
 
 }

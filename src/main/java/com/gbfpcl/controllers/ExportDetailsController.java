@@ -1,5 +1,6 @@
 package com.gbfpcl.controllers;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gbfpcl.dtos.ExportDetailDto;
@@ -55,6 +57,11 @@ public class ExportDetailsController {
 	public ResponseEntity<ExportDetails> getExportEntryById(@PathVariable("entryId")Integer entryId){
 		ExportDetails entryById = this.exportDetailsService.getExportEntryById(entryId);
 		return new ResponseEntity<>(entryById,HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/getExportEntriesOndate")
+	public ResponseEntity<List<ExportDetails>> getExportEntriesOndate(@RequestParam("exportDate")Date date){
+		return new ResponseEntity<>(this.exportDetailsService.getExportEntriesOndate(date),HttpStatus.OK);
 	}
 	
 	

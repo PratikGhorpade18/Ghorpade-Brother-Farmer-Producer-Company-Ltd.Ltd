@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gbfpcl.dtos.DailyProductionDetailsDto;
 import com.gbfpcl.dtos.FarmerDto;
 import com.gbfpcl.entities.DailyProductionDetails;
 import com.gbfpcl.entities.Farmer;
@@ -33,9 +34,9 @@ public class DailyProductionController {
 	
 	
 	@PostMapping(value="/addDailyReport")
-	@ResponseBody public ResponseEntity<DailyProductionDetails> addDailyReport( @Valid @RequestBody DailyProductionDetails dailyProductionDetails){
-		DailyProductionDetails created=this.dailyReportService.addDailyReportl(dailyProductionDetails);
-		return new ResponseEntity<DailyProductionDetails>(created,HttpStatus.CREATED);
+	@ResponseBody public ResponseEntity<DailyProductionDetailsDto> addDailyReport( @Valid @RequestBody DailyProductionDetailsDto dailyProductionDetails){
+		DailyProductionDetailsDto created=this.dailyReportService.addDailyReportl(dailyProductionDetails);
+		return new ResponseEntity<DailyProductionDetailsDto>(created,HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value="/getAllDailyReport")
