@@ -1,6 +1,8 @@
 package com.gbfpcl.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -23,7 +25,9 @@ import com.gbfpcl.dtos.DailyProductionDetailsDto;
 import com.gbfpcl.dtos.FarmerDto;
 import com.gbfpcl.entities.DailyProductionDetails;
 import com.gbfpcl.entities.Farmer;
+import com.gbfpcl.entities.ProductMaster;
 import com.gbfpcl.service.DailyReportService;
+import com.gbfpcl.service.ExportDetailsService;
 
 @RestController
 @RequestMapping("/Ghorpade-Brother/DailyReport")
@@ -31,6 +35,9 @@ public class DailyProductionController {
 	
 	@Autowired
 	private DailyReportService dailyReportService;
+	
+	@Autowired
+	private ExportDetailsService exportDetailsService;
 	
 	
 	@PostMapping(value="/addDailyReport")
@@ -62,5 +69,24 @@ public class DailyProductionController {
 		return new ResponseEntity<DailyProductionDetails>(dailyProductionDetails,HttpStatus.OK);
 	}
 	
-
+	@GetMapping(value="/getAllStockData")
+	public ResponseEntity<Map<String,Map<String,Integer>>> getAllStockData()
+	{
+		Map<String,Map<String,Integer>> resultMap =new HashMap<>();
+		
+		Map<String, Integer> availableMap = new HashMap<>();
+		Map<String, Integer> exportedMap =this.exportDetailsService.getExportedProductWise();
+		Map<String, Integer> totalMap = this.dailyReportService.getTotalProductionProductWise();
+		
+		availableMap=totalMap.entrySet().stream()
+         .collect(HashMap::new,
+                 (map, entry) -> map.put(entry.getKey(), entry.getValue() - exportedMap.getOrDefault(entry.getKey(), 0)),
+                 HashMap::putAll);
+		
+		resultMap.put("Exported ",exportedMap );
+		resultMap.put("Total Production",totalMap );
+		resultMap.put("Avilable",availableMap );
+		
+		return new ResponseEntity<>(resultMap,HttpStatus.OK);
+	}
 }

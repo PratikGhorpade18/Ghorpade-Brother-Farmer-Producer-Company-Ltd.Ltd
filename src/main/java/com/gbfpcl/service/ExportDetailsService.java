@@ -2,6 +2,7 @@ package com.gbfpcl.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
@@ -21,5 +22,7 @@ public interface ExportDetailsService {
 	ExportDetails editExportEntry(Integer entryId, ExportDetails exportdetails);
 
 	List<ExportDetails> getExportEntriesOndate(Date date);
+
+	Map<String,Integer> getExportedProductWise();
 
 }

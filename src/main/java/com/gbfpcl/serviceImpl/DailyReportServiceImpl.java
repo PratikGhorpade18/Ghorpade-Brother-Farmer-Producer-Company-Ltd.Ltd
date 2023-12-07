@@ -1,8 +1,12 @@
 package com.gbfpcl.serviceImpl;
 
-import java.util.List;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingInt;
 
-import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +19,6 @@ import com.gbfpcl.exceptions.ResourceNotFoundException;
 import com.gbfpcl.repositories.DailyReportRepo;
 import com.gbfpcl.repositories.ProductRepo;
 import com.gbfpcl.service.DailyReportService;
-import com.gbfpcl.service.ProductService;
 
 @Service
 public class DailyReportServiceImpl  implements DailyReportService{
@@ -80,6 +83,15 @@ public class DailyReportServiceImpl  implements DailyReportService{
 	@Override
 	public List<DailyProductionDetails> getAll() {
 		return this.dailyReportRepo.findAll();
+	}
+	
+	
+
+	@Override
+	public Map<String, Integer> getTotalProductionProductWise() {
+		List<DailyProductionDetails> all = getAll();
+		Map<String, Integer> productMap= all.stream().collect(groupingBy(e->e.getProductMaster().getProductName(),summingInt(d -> (int) d.getTotalProduction())));
+		return productMap;
 	}
 
 }

@@ -1,12 +1,18 @@
 package com.gbfpcl.serviceImpl;
 
-import java.sql.Date;
-import java.util.List;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingInt;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.gbfpcl.dtos.ExportDetailDto;
 import com.gbfpcl.entities.ExportDetails;
 import com.gbfpcl.exceptions.ResourceNotFoundException;
@@ -75,6 +81,13 @@ ModelMapper mapper=new ModelMapper();
 	@Override
 	public List<ExportDetails> getExportEntriesOndate(Date date) {
 		return this.exportDetailsRepo.findExportEntriesOnDate(date);
+	}
+
+	@Override
+	public Map<String, Integer> getExportedProductWise() {
+		List<ExportDetails> all = getAllExportEntries();
+		Map<String, Integer> productMap=all.stream().collect(groupingBy(e -> e.getProductMaster().getProductName(),summingInt(ExportDetails::getQuantity)));
+		return productMap;
 	}
 
 }
