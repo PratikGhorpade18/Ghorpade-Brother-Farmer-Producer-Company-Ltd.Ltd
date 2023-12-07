@@ -14,4 +14,5 @@ public class DailyProductionDetailsDto {
 	private float totalProduction;
 	private float approxMaterialWeight;
 	private ProductMaster productMaster;
+	private String unitofProduct;
 }

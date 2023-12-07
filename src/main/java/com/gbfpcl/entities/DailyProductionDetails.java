@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -49,6 +50,9 @@ public class DailyProductionDetails {
 	
 	@Column(name="approx_material_weight")
 	private float approxMaterialWeight;
+	
+	@Transient
+	private String unitofProduct;
 
 	@ManyToOne(cascade = CascadeType.MERGE,fetch  = FetchType.LAZY)
 	@JoinColumn(name="product_id")

@@ -65,7 +65,11 @@ public class ImportDetailsController {
 		return new ResponseEntity<>(importEntriesByDate,HttpStatus.OK);
 	}
 	
-	
+	@GetMapping(value="/getAllEntriesOfFarmer")
+	public ResponseEntity<List<ImportDetailsDto>> getAllEntriesOfFamrer(@RequestParam("farmerId") Integer farmerId){
+		List<ImportDetailsDto> importEntriesByFarmer= this.sugarcaneEntryService.getAllEntriesOfFamrer(farmerId);
+		return new ResponseEntity<>(importEntriesByFarmer,HttpStatus.OK);
+	}
 	
 
 }

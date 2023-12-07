@@ -19,4 +19,5 @@ private Integer exportId;
 	private Timestamp paymentDate;
 	private ProductMaster productMaster;
 	private CustomerDetails customerDetails;
+	private String unitofProduct;
 }

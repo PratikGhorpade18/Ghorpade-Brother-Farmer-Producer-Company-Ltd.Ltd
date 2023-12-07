@@ -29,6 +29,9 @@ ModelMapper mapper=new ModelMapper();
 
 	@Override
 	public ExportDetailDto addExportEntry(ExportDetailDto exportDetails) {
+		if(exportDetails.getUnitofProduct().equalsIgnoreCase("t")) {
+			exportDetails.setQuantity(exportDetails.getQuantity()*1000);
+		}
 		exportDetails.setAmount(exportDetails.getRatePerkg()*exportDetails.getQuantity());
 		exportDetails.setCustomerDetails(this.customerDetailsRepo.findById(exportDetails.getCustomerDetails().getCustomerId()).orElseThrow(()->new ResourceNotFoundException("Customer", "customerId", exportDetails.getCustomerDetails().getCustomerId())));
 		exportDetails.setProductMaster(this.productRepo.findById(exportDetails.getProductMaster().getProductId()).orElseThrow(()->new ResourceNotFoundException("Product", "roductId", exportDetails.getProductMaster().getProductId())));
@@ -54,7 +57,9 @@ ModelMapper mapper=new ModelMapper();
 	@Override
 	public ExportDetails editExportEntry(Integer entryId, ExportDetails exportdetails) {
 		ExportDetails exportEntryById = getExportEntryById(entryId);
-		
+		if(exportdetails.getUnitofProduct().equalsIgnoreCase("t")) {
+			exportEntryById.setQuantity(exportdetails.getQuantity()*1000);
+		}
 		exportEntryById.setAmount(exportdetails.getRatePerkg()*exportdetails.getQuantity());
 		exportEntryById.setComment(exportdetails.getComment());
 		exportEntryById.setExportDate(exportdetails.getExportDate());

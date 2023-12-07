@@ -20,4 +20,6 @@ public interface ImportDetailsService {
 
 	List<ImportDetailsDto> getImportEntriesByDate(Date date);
 
+	List<ImportDetailsDto> getAllEntriesOfFamrer(Integer farmerId);
+
 }

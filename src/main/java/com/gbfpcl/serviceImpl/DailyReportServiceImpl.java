@@ -33,7 +33,13 @@ public class DailyReportServiceImpl  implements DailyReportService{
 	public DailyProductionDetailsDto addDailyReportl( DailyProductionDetailsDto dailyProductionDetails) {
 		ProductMaster orElseThrow = this.productRepo.findById(dailyProductionDetails.getProductMaster().getProductId()).orElseThrow(()-> new ResourceNotFoundException("Product", "productId", dailyProductionDetails.getProductMaster().getProductId()));
 		dailyProductionDetails.setProductMaster(orElseThrow);
-		dailyProductionDetails.setTotalProduction(dailyProductionDetails.getProductionQuantity()+dailyProductionDetails.getWasteProduct());
+	
+	if(dailyProductionDetails.getUnitofProduct().equals("t")) {
+		dailyProductionDetails.setProductionQuantity(dailyProductionDetails.getProductionQuantity()*1000);
+		dailyProductionDetails.setWasteProduct(dailyProductionDetails.getWasteProduct()*1000);
+		dailyProductionDetails.setApproxMaterialWeight(dailyProductionDetails.getApproxMaterialWeight()*1000);
+		}
+	dailyProductionDetails.setTotalProduction(dailyProductionDetails.getProductionQuantity()+dailyProductionDetails.getWasteProduct());
 		DailyProductionDetails save = this.dailyReportRepo.save(this.mapper.map(dailyProductionDetails, DailyProductionDetails.class));
 		return this.mapper.map(save, DailyProductionDetailsDto.class);
 	}
@@ -50,6 +56,11 @@ public class DailyReportServiceImpl  implements DailyReportService{
 	        dailyReportId2.setProductionDate(dailyProductionDetails.getProductionDate());
 	        dailyReportId2.setApproxMaterialWeight(dailyProductionDetails.getApproxMaterialWeight());
 	        dailyReportId2.setProductMaster(this.productRepo.findById(dailyProductionDetails.getProductMaster().getProductId()).orElseThrow(()-> new ResourceNotFoundException("Product", "productId",dailyProductionDetails.getProductMaster().getProductId() )));
+	        if(dailyProductionDetails.getUnitofProduct().equals("t")) {
+	        	dailyReportId2.setProductionQuantity(dailyProductionDetails.getProductionQuantity()*1000);
+	        	dailyReportId2.setWasteProduct(dailyProductionDetails.getWasteProduct()*1000);
+	        	dailyReportId2.setApproxMaterialWeight(dailyProductionDetails.getApproxMaterialWeight()*1000);
+	    		}
 	        dailyReportId2.setTotalProduction(dailyProductionDetails.getProductionQuantity()+dailyProductionDetails.getWasteProduct());
 	        
 		return this.dailyReportRepo.save(dailyReportId2);

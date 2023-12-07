@@ -30,6 +30,7 @@ public class ImportDetailsDto {
 	private String vehicalNumber;
 	
 	private String paymentStatus;
+	private String unitofProduct;
 	
 	private String comment;
 	

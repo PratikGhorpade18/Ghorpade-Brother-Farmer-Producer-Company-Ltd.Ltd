@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -59,7 +60,8 @@ public class ExportDetails {
 	@JoinColumn(name="product_id")
 	private ProductMaster productMaster;
 	
-	
+	@Transient
+	private String unitofProduct;
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id")

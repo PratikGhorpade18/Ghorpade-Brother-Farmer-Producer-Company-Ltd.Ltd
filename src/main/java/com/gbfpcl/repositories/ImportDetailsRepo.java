@@ -17,4 +17,8 @@ public interface ImportDetailsRepo extends JpaRepository<ImportDetails, Integer>
 	
 	 @Query("SELECT i FROM ImportDetails i WHERE FUNCTION('DATE', i.entryDateTime) = FUNCTION('DATE', :date)")
 	    List<ImportDetails> findByEntryDateTime(@Param("date") Date date);
+	 
+	 List<ImportDetails> findByFarmerFarmerId(int farmerId);
+	 
+	 
 }

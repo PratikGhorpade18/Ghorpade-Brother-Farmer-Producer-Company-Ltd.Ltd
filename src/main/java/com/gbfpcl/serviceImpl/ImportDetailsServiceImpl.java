@@ -33,6 +33,9 @@ public class ImportDetailsServiceImpl implements ImportDetailsService {
 	@Override
 	public ImportDetailsDto addEntry(ImportDetailsDto sugarcaneEntryDto) {
 		sugarcaneEntryDto.setAmount(sugarcaneEntryDto.getRatePerTonnage()*sugarcaneEntryDto.getWeight());
+		if(sugarcaneEntryDto.getUnitofProduct().equals("t")) {
+			sugarcaneEntryDto.setWeight(sugarcaneEntryDto.getWeight()*1000);
+			}
 		Farmer farmer = this.farmerRepo.findById(sugarcaneEntryDto.getFarmer().getFarmerId()).orElseThrow(()->new ResourceNotFoundException("Farmer", "farmerId", sugarcaneEntryDto.getFarmer().getFarmerId()));
 		FarmerDto map = this.mapper.map(farmer, FarmerDto.class);
 		sugarcaneEntryDto.setFarmer(map);
@@ -50,6 +53,9 @@ public class ImportDetailsServiceImpl implements ImportDetailsService {
 		save.setRecovery(sugarcaneEntryDto.getRecovery());
 		save.setVehicalNumber(sugarcaneEntryDto.getVehicalNumber());
 		save.setWeight(sugarcaneEntryDto.getWeight());
+		if(sugarcaneEntryDto.getUnitofProduct().equals("t")) {
+			save.setWeight(sugarcaneEntryDto.getWeight()*1000);
+			}
 		Farmer farmer = this.farmerRepo.findById(sugarcaneEntryDto.getFarmer().getFarmerId()).orElseThrow(()->new ResourceNotFoundException("Farmer", "farmerId", sugarcaneEntryDto.getFarmer().getFarmerId()));
 		save.setFarmer(farmer);
 		save.setComment(sugarcaneEntryDto.getComment());
@@ -86,6 +92,16 @@ public class ImportDetailsServiceImpl implements ImportDetailsService {
 			listAsPerDate.add(this.mapper.map(e, ImportDetailsDto.class));
 		});
 		return listAsPerDate;
+	}
+
+	@Override
+	public List<ImportDetailsDto> getAllEntriesOfFamrer(Integer farmerId) {
+		List<ImportDetails> findByFarmerFarmerId = this.sugarcaneEntryRepo.findByFarmerFarmerId(farmerId);
+		List<ImportDetailsDto> listAsPerFarmer = new ArrayList<>();
+		findByFarmerFarmerId.forEach(e->{
+			listAsPerFarmer.add(this.mapper.map(e, ImportDetailsDto.class));
+		});
+		return listAsPerFarmer;
 	}
 	
 	
