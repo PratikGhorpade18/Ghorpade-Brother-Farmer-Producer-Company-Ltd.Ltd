@@ -1,5 +1,7 @@
 package com.gbfpcl.entities;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,28 +21,54 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@Table(name="admin_master")
-public class AdminMaster {
-	
+@AllArgsConstructor
+@Table(name = "admin_master")
+public class AdminMaster implements UserDetails {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="admin_id")
+	@Column(name = "admin_id")
 	private Integer adminId;
 
-	
-	 
-	@Column(name="username")
+	@Column(name = "username")
 	private String username;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
-	
-	@Column(name="full_name")
+
+	@Column(name = "full_name")
 	private String fullName;
-	
-	
-	
-	
-	
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+
+		return this.username;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 }
