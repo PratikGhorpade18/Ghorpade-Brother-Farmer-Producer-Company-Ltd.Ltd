@@ -62,7 +62,9 @@ public class DailyProductionController {
 	@DeleteMapping(value="/deleteDailyReport/{dailyReportId}")
 	public ResponseEntity<?> deleteFarmerById(@PathVariable(name="dailyReportId")Integer dailyReportId){
 		this.dailyReportService.deleteDailyReport(dailyReportId);
-		return  ResponseEntity.ok("Report Deleted Sucessfully!!!");
+		Map<String,String> map= new HashMap<>();
+		map.put("message", "Report Deleted Sucessfully!!!");
+		return  ResponseEntity.ok(map);
 	}
 	
 	@GetMapping(value="/getDailyReportId/{dailyReportId}")

@@ -1,7 +1,9 @@
 package com.gbfpcl.controllers;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -52,7 +54,9 @@ public class ImportDetailsController {
 	@DeleteMapping(value="/deleteEntry/{entryId}")
 	public ResponseEntity<?>deleteEntry(@PathVariable("entryId")Integer entryId){
 		this.sugarcaneEntryService.deleteEntry(entryId);
-		return  ResponseEntity.ok("Entry Deleted Sucessfully!!!");
+		Map<String,String> map= new HashMap<>();
+		map.put("message", "Entry Deleted Sucessfully!!!");
+		return  ResponseEntity.ok(map);
 	}
 	
 	@GetMapping(value="/getEntryById/{entryId}")

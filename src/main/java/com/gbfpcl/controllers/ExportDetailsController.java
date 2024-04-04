@@ -1,6 +1,7 @@
 package com.gbfpcl.controllers;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,9 @@ public class ExportDetailsController {
 	@DeleteMapping(value="/deleteExportEntry/{entryId}")
 	public ResponseEntity<?>deleteExportEntry(@PathVariable("entryId")Integer entryId){
 		this.exportDetailsService.deleteExportEntry(entryId);
-		return  ResponseEntity.ok("Export Entry Deleted Sucessfully!!!");
+		Map<String,String> map= new HashMap<>();
+		map.put("message", "Export Entry Deleted Sucessfully!!!");
+		return  ResponseEntity.ok(map);
 	}
 	
 	@GetMapping(value="/getExportEntryById/{entryId}")

@@ -1,6 +1,8 @@
 package com.gbfpcl.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -49,8 +51,10 @@ public class CustomerDetailsController {
 	
 	@DeleteMapping(value="/deleteCustomer/{customerId}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable(name="customerId")Integer customerId){
+		Map<String,String> map= new HashMap<>();
 		this.customerDetailsService.deleteCustomer(customerId);
-		return  ResponseEntity.ok("Farmer Deleted Sucessfully!!!");
+		map.put("message", "Customer deleted Sucessfully");
+		return  ResponseEntity.ok(map);
 	}
 	
 	@GetMapping(value="/getCustomerById/{customerId}")
